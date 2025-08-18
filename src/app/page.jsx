@@ -6,6 +6,7 @@ import MusicControls from '@/components/MusicControls';
 import GeminiPanel from '@/components/GeminiPanel';
 import AudioEngine from '@/components/AudioEngine';
 import { Play, Pause, Square, Volume2 } from 'lucide-react';
+import MacHeader from '@/components/MacHeader'; // Import the MacHeader component
 
 export default function CodeSynth() {
   const [code, setCode] = useState(`// Supp? this is Code Synth by Apurva
@@ -108,9 +109,12 @@ for (let i = 0; i < 10; i++) {
       <div className="container mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-120px)]">
           <div className="lg:col-span-2 bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 overflow-hidden">
-            <div className="p-4 border-b border-purple-500/20">
-              <h2 className="text-lg font-semibold text-purple-300">Code Editor</h2>
-              <p className="text-sm text-gray-400">by Apurva</p>
+            <div className="p-4 border-b border-purple-500/20 flex items-center space-x-4"> {/* Added flex container */}
+              <MacHeader />
+              <div>
+                <h2 className="text-lg font-semibold text-purple-300">Code Editor</h2>
+                <p className="text-sm text-gray-400">by Apurva</p>
+              </div>
             </div>
             <CodeEditor
               code={code}
@@ -123,7 +127,10 @@ for (let i = 0; i < 10; i++) {
           <div className="lg:col-span-2 space-y-6">
             {/* Music Controls */}
             <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6">
-              <h2 className="text-lg font-semibold text-purple-300 mb-4">Music Controls</h2>
+              <div className="flex items-center space-x-4"> {/* Added flex container */}
+                <MacHeader />
+                <h2 className="text-lg font-semibold text-purple-300">Music Controls</h2>
+              </div>
               <MusicControls
                 settings={musicSettings}
                 onChange={handleSettingsChange}
@@ -132,7 +139,10 @@ for (let i = 0; i < 10; i++) {
 
             {/* Gemini AI Panel */}
             <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6 flex-1">
-              <h2 className="text-lg font-semibold text-purple-300 mb-4">AI Code Generator</h2>
+              <div className="flex items-center space-x-4"> {/* Added flex container */}
+                <MacHeader />
+                <h2 className="text-lg font-semibold text-purple-300">AI Code Generator</h2>
+              </div>
               <GeminiPanel onCodeGenerated={setCode} />
             </div>
           </div>
