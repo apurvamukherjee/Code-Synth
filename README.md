@@ -1,4 +1,4 @@
-# 🎹 Code Synth
+# 🎹 Code Synth(under construction)
 
 > A playful web app that turns your code into music in real-time. Where logic meets harmony.
 Ever looked at a block of code and thought, "What would this sound like?" No? Well, now you can!
