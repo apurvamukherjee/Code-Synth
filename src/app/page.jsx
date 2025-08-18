@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
-import { Play, Pause, Square, Volume2 } from 'lucide-react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import CodeEditor from '@/components/CodeEditor';
 import MusicControls from '@/components/MusicControls';
 import GeminiPanel from '@/components/GeminiPanel';
 import AudioEngine from '@/components/AudioEngine';
+import { Play, Pause, Square, Volume2 } from 'lucide-react';
 
 export default function CodeSynth() {
   const [code, setCode] = useState(`// Supp? this is Code Synth by Apurva
@@ -54,13 +54,16 @@ for (let i = 0; i < 10; i++) {
 
   const handleCodeChange = useCallback((newCode) => {
     setCode(newCode);
-    if (isPlaying) {
-      handleStop();
+    if (audioEngineRef.current && isPlaying) {
+      audioEngineRef.current.updateCode(newCode);
     }
-  }, [isPlaying, handleStop]);
+  }, [isPlaying]);
 
   const handleSettingsChange = useCallback((newSettings) => {
-    setMusicSettings(newSettings);
+    setMusicSettings(prev => ({ ...prev, ...newSettings }));
+    if (audioEngineRef.current) {
+      audioEngineRef.current.updateSettings({ ...musicSettings, ...newSettings });
+    }
   }, [musicSettings]);
 
   return (
@@ -69,11 +72,11 @@ for (let i = 0; i < 10; i++) {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Volume2 size={20} />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                <img src="/src/components/icon.jpg" alt="Logo" className="w-full h-full object-cover" />
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Code Synth
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
+                Code Synth by Apurva
               </h1>
             </div>
             <div className="flex items-center space-x-2">
@@ -97,14 +100,6 @@ for (let i = 0; i < 10; i++) {
               >
                 <Square size={20} />
               </button>
-              <button
-                onClick={() => {
-                  document.documentElement.classList.toggle('dark');
-                }}
-                className="p-2 rounded bg-gray-200 dark:bg-gray-800 text-black dark:text-white"
-              >
-                Toggle Dark Mode
-              </button>
             </div>
           </div>
         </div>
@@ -124,7 +119,9 @@ for (let i = 0; i < 10; i++) {
             />
           </div>
 
+          {/* Right Panel */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Music Controls */}
             <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6">
               <h2 className="text-lg font-semibold text-purple-300 mb-4">Music Controls</h2>
               <MusicControls
@@ -133,6 +130,7 @@ for (let i = 0; i < 10; i++) {
               />
             </div>
 
+            {/* Gemini AI Panel */}
             <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6 flex-1">
               <h2 className="text-lg font-semibold text-purple-300 mb-4">AI Code Generator</h2>
               <GeminiPanel onCodeGenerated={setCode} />
@@ -141,18 +139,19 @@ for (let i = 0; i < 10; i++) {
         </div>
       </div>
 
-      <footer className="border-t border-purple-500/20 bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-4 text-center text-gray-400">
-          &copy; 2025 Code Synth by Apurva
-        </div>
-      </footer>
-
+      {/* Audio Engine */}
       <AudioEngine
         ref={audioEngineRef}
         code={code}
         settings={musicSettings}
         isPlaying={isPlaying}
       />
+
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
     </div>
   );
 }

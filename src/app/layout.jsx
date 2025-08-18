@@ -15,14 +15,6 @@ export default function RootLayout({children}) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <button
-        onClick={() => {
-          document.documentElement.classList.toggle('dark');
-        }}
-        className="p-2 rounded bg-gray-200 dark:bg-gray-800 text-black dark:text-white"
-      >
-        Toggle Dark Mode
-      </button>
     </QueryClientProvider>
   );
 }

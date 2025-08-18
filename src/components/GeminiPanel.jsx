@@ -84,7 +84,7 @@ export default function GeminiPanel({ onCodeGenerated }) {
             <button
               key={index}
               onClick={() => handleQuickPrompt(quickPrompt)}
-              className="text-left text-xs bg-gray-800/50 dark:bg-gray-900/50 hover:bg-gray-700/50 dark:hover:bg-gray-800/50 border border-purple-500/20 rounded-lg px-3 py-2 text-gray-300 dark:text-gray-100 hover:text-white transition-colors"
+              className="text-left text-xs bg-gray-800/50 hover:bg-gray-700/50 border border-purple-500/20 rounded-lg px-3 py-2 text-gray-300 hover:text-white transition-colors"
             >
               {quickPrompt}
             </button>
@@ -98,7 +98,7 @@ export default function GeminiPanel({ onCodeGenerated }) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe the code you want to generate..."
-            className="w-full bg-gray-800 dark:bg-gray-900 border border-purple-500/30 rounded-lg px-3 py-2 text-white dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-purple-400 focus:outline-none resize-none"
+            className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none resize-none"
             rows={3}
             disabled={isLoading}
           />
@@ -126,10 +126,9 @@ export default function GeminiPanel({ onCodeGenerated }) {
       <div>
         
       </div>
-      
 
       {(streamingMessage || lastResponse) && (
-        <div className="flex-1 bg-gray-800/30 dark:bg-gray-900/30 border border-purple-500/20 rounded-lg p-3 overflow-y-auto">
+        <div className="flex-1 bg-gray-800/30 border border-purple-500/20 rounded-lg p-3 overflow-y-auto">
           <h3 className="text-sm font-medium text-purple-300 mb-2 flex items-center">
             <Sparkles size={14} className="mr-2" />
             Generated Code
