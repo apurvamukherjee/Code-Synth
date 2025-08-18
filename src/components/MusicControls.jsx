@@ -1,51 +1,48 @@
 'use client';
 
-import { Volume2, Music, Clock, Settings } from 'lucide-react';
+import { useState, useEffect } from 'react';
+
+const scales = ['major', 'minor', 'pentatonic'];
+const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const instruments = ['sine', 'triangle', 'square', 'sawtooth'];
 
 export default function MusicControls({ settings, onChange }) {
-  const scales = [
-    { value: 'major', label: 'Major' },
-    { value: 'minor', label: 'Minor' },
-    { value: 'pentatonic', label: 'Pentatonic' },
-    { value: 'blues', label: 'Blues' },
-    { value: 'dorian', label: 'Dorian' },
-    { value: 'mixolydian', label: 'Mixolydian' }
-  ];
+  const [localSettings, setLocalSettings] = useState(settings);
 
-  const keys = [
-    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-  ];
+  useEffect(() => {
+    setLocalSettings(settings);
+  }, [settings]);
 
-  const instruments = [
-    { value: 'piano', label: 'Piano' },
-    { value: 'synth', label: 'Synth Lead' },
-    { value: 'bass', label: 'Bass' },
-    { value: 'strings', label: 'Strings' },
-    { value: 'pad', label: 'Pad' },
-    { value: 'bell', label: 'Bell' }
-  ];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLocalSettings(prevSettings => ({
+      ...prevSettings,
+      [name]: value
+    }));
+  };
 
-  const handleChange = (key, value) => {
-    onChange({ [key]: value });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onChange(localSettings);
   };
 
   return (
-    <div className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Scale and Key */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
-            <Music size={16} className="mr-2" />
             Scale
           </label>
           <select
-            value={settings.scale}
-            onChange={(e) => handleChange('scale', e.target.value)}
+            name="scale"
+            value={localSettings.scale}
+            onChange={handleChange}
             className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
           >
             {scales.map(scale => (
-              <option key={scale.value} value={scale.value}>
-                {scale.label}
+              <option key={scale} value={scale}>
+                {scale}
               </option>
             ))}
           </select>
@@ -53,12 +50,12 @@ export default function MusicControls({ settings, onChange }) {
 
         <div>
           <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
-            <Settings size={16} className="mr-2" />
             Key
           </label>
           <select
-            value={settings.key}
-            onChange={(e) => handleChange('key', e.target.value)}
+            name="key"
+            value={localSettings.key}
+            onChange={handleChange}
             className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
           >
             {keys.map(key => (
@@ -72,15 +69,14 @@ export default function MusicControls({ settings, onChange }) {
 
       <div>
         <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
-          <Clock size={16} className="mr-2" />
-          Tempo: {settings.tempo} BPM
+          Tempo: {localSettings.tempo} BPM
         </label>
         <input
           type="range"
           min="60"
           max="200"
-          value={settings.tempo}
-          onChange={(e) => handleChange('tempo', parseInt(e.target.value))}
+          value={localSettings.tempo}
+          onChange={(e) => setLocalSettings({ ...localSettings, tempo: parseInt(e.target.value, 10) })}
           className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -91,17 +87,17 @@ export default function MusicControls({ settings, onChange }) {
 
       <div>
         <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
-          <Music size={16} className="mr-2" />
           Instrument
         </label>
         <select
-          value={settings.instrument}
-          onChange={(e) => handleChange('instrument', e.target.value)}
+          name="instrument"
+          value={localSettings.instrument}
+          onChange={handleChange}
           className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
         >
           {instruments.map(instrument => (
-            <option key={instrument.value} value={instrument.value}>
-              {instrument.label}
+            <option key={instrument} value={instrument}>
+              {instrument}
             </option>
           ))}
         </select>
@@ -109,16 +105,15 @@ export default function MusicControls({ settings, onChange }) {
 
       <div>
         <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
-          <Volume2 size={16} className="mr-2" />
-          Volume: {Math.round(settings.volume * 100)}%
+          Volume: {Math.round(localSettings.volume * 100)}%
         </label>
         <input
           type="range"
           min="0"
           max="1"
-          step="0.01"
-          value={settings.volume}
-          onChange={(e) => handleChange('volume', parseFloat(e.target.value))}
+          step="0.05"
+          value={localSettings.volume}
+          onChange={(e) => setLocalSettings({ ...localSettings, volume: parseFloat(e.target.value) })}
           className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -127,7 +122,61 @@ export default function MusicControls({ settings, onChange }) {
         </div>
       </div>
 
+      {/* The new button replaces the old one */}
+      <a onClick={handleSubmit} className="codepen-button block w-full"><span>Apply Settings</span></a>
+
       <style jsx>{`
+        .codepen-button {
+          display: block;
+          cursor: pointer;
+          color: white;
+          margin: 0 auto;
+          position: relative;
+          text-decoration: none;
+          font-weight: 600;
+          border-radius: 6px;
+          overflow: hidden;
+          padding: 3px;
+          isolation: isolate;
+        }
+
+        .codepen-button::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 400%;
+          height: 100%;
+          background: linear-gradient(115deg,#4fcf70,#fad648,#a767e5,#12bcfe,#44ce7b);
+          background-size: 25% 100%;
+          animation: an-at-keyframe-css-at-rule-that-translates-via-the-transform-property-the-background-by-negative-25-percent-of-its-width-so-that-it-gives-a-nice-border-animation_-We-use-the-translate-property-to-have-a-nice-transition-so-it_s-not-a-jerk-of-a-start-or-stop .75s linear infinite;
+          animation-play-state: paused;
+          translate: -5% 0%;
+          transition: translate 0.25s ease-out;
+        }
+
+        .codepen-button:hover::before {
+          animation-play-state: running;
+          transition-duration: 0.75s;
+          translate: 0% 0%;
+        }
+
+        @keyframes an-at-keyframe-css-at-rule-that-translates-via-the-transform-property-the-background-by-negative-25-percent-of-its-width-so-that-it-gives-a-nice-border-animation_-We-use-the-translate-property-to-have-a-nice-transition-so-it_s-not-a-jerk-of-a-start-or-stop {
+          to {
+            transform: translateX(-25%);
+          }
+        }
+
+        .codepen-button span {
+          position: relative;
+          display: block;
+          padding: 1rem 1.5rem;
+          font-size: 1.1rem;
+          background: #000;
+          border-radius: 3px;
+          height: 100%;
+        }
+
         .slider::-webkit-slider-thumb {
           appearance: none;
           height: 16px;
@@ -157,6 +206,6 @@ export default function MusicControls({ settings, onChange }) {
           border-radius: 4px;
         }
       `}</style>
-    </div>
+    </form>
   );
 }

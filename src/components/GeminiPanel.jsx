@@ -17,9 +17,9 @@ export default function GeminiPanel({ onCodeGenerated }) {
     onCodeGenerated(message);
   }, [onCodeGenerated]);
 
-  const handleStreamResponse = useHandleStreamResponse({ 
-    onChunk: setStreamingMessage, 
-    onFinish: handleFinish 
+  const handleStreamResponse = useHandleStreamResponse({
+    onChunk: setStreamingMessage,
+    onFinish: handleFinish
   });
 
   const handleSubmit = useCallback(async (e) => {
@@ -75,7 +75,7 @@ export default function GeminiPanel({ onCodeGenerated }) {
   return (
     <div className="space-y-4 h-full flex flex-col">
       <div className="space-y-2">
-        <h3 className="text-sm font-medium text-purple-300 flex items-center">
+        <h3 className="text-sm font-medium text-red-300 flex items-center">
           <Sparkles size={14} className="mr-2" />
           Quick Prompts
         </h3>
@@ -93,7 +93,7 @@ export default function GeminiPanel({ onCodeGenerated }) {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="relative">handlethe < q className="devicons devicons-laravel"></ q>
+        <div className="relative">
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -104,32 +104,34 @@ export default function GeminiPanel({ onCodeGenerated }) {
           />
           <Code size={16} className="absolute top-3 right-3 text-gray-400" />
         </div>
-        
+
+        {/* The new button code */}
         <button
           type="submit"
           disabled={!prompt.trim() || isLoading}
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-600 disabled:to-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
+          className="instagram-button"
         >
+          {/* Button content based on loading state */}
           {isLoading ? (
             <>
-              <Loader2 size={16} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin mr-2 inline-block" />
               <span>Generating...</span>
             </>
           ) : (
             <>
-              <Send size={16} />
+              <Send size={16} className="mr-2 inline-block" />
               <span>Generate Code</span>
             </>
           )}
         </button>
       </form>
       <div>
-        
+
       </div>
 
       {(streamingMessage || lastResponse) && (
         <div className="flex-1 bg-gray-800/30 border border-purple-500/20 rounded-lg p-3 overflow-y-auto">
-          <h3 className="text-sm font-medium text-purple-300 mb-2 flex items-center">
+          <h3 className="text-sm font-medium text-red-300 mb-2 flex items-center">
             <Sparkles size={14} className="mr-2" />
             Generated Code
           </h3>
@@ -139,6 +141,59 @@ export default function GeminiPanel({ onCodeGenerated }) {
           </div>
         </div>
       )}
+
+      {/* CSS Styles for the button */}
+      <style jsx>{`
+        button {
+  background: transparent;
+  position: relative;
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid rgb(255,0,0);
+  border-radius: 25px;
+  outline: none;
+  overflow: hidden;
+  color: rgb(255,0,0);
+  transition: color 0.3s 0.1s ease-out;
+  text-align: center;
+}
+
+button span {
+  margin: 10px;
+}
+
+button::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  border-radius: 50%;
+  display: block;
+  width: 20em;
+  height: 20em;
+  left: -5em;
+  text-align: center;
+  transition: box-shadow 0.5s ease-out;
+  z-index: -1;
+}
+
+button:hover {
+  color: #fff;
+  border: 1px solid rgb(255,0,0);
+}
+
+button:hover::before {
+  box-shadow: inset 0 0 0 10em rgb(255, 0, 0);
+}
+      `}</style>
     </div>
   );
 }
