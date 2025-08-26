@@ -31,14 +31,14 @@ export default function MusicControls({ settings, onChange }) {
       {/* Scale and Key */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
+          <label className="flex items-center text-sm font-medium text-red-300 mb-2">
             Scale
           </label>
           <select
             name="scale"
             value={localSettings.scale}
             onChange={handleChange}
-            className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
+            className="w-full bg-gray-800 border border-red-500/30 rounded-lg px-3 py-2 text-white focus:border-red-400 focus:outline-none"
           >
             {scales.map(scale => (
               <option key={scale} value={scale}>
@@ -49,14 +49,14 @@ export default function MusicControls({ settings, onChange }) {
         </div>
 
         <div>
-          <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
+          <label className="flex items-center text-sm font-medium text-red-300 mb-2">
             Key
           </label>
           <select
             name="key"
             value={localSettings.key}
             onChange={handleChange}
-            className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
+            className="w-full bg-gray-800 border border-red-500/30 rounded-lg px-3 py-2 text-white focus:border-red-400 focus:outline-none"
           >
             {keys.map(key => (
               <option key={key} value={key}>
@@ -68,7 +68,7 @@ export default function MusicControls({ settings, onChange }) {
       </div>
 
       <div>
-        <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
+        <label className="flex items-center text-sm font-medium text-red-300 mb-2">
           Tempo: {localSettings.tempo} BPM
         </label>
         <input
@@ -86,14 +86,14 @@ export default function MusicControls({ settings, onChange }) {
       </div>
 
       <div>
-        <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
+        <label className="flex items-center text-sm font-medium text-red-300 mb-2">
           Instrument
         </label>
         <select
           name="instrument"
           value={localSettings.instrument}
           onChange={handleChange}
-          className="w-full bg-gray-800 border border-purple-500/30 rounded-lg px-3 py-2 text-white focus:border-purple-400 focus:outline-none"
+          className="w-full bg-gray-800 border border-red-500/30 rounded-lg px-3 py-2 text-white focus:border-red-400 focus:outline-none"
         >
           {instruments.map(instrument => (
             <option key={instrument} value={instrument}>
@@ -104,7 +104,7 @@ export default function MusicControls({ settings, onChange }) {
       </div>
 
       <div>
-        <label className="flex items-center text-sm font-medium text-purple-300 mb-2">
+        <label className="flex items-center text-sm font-medium text-red-300 mb-2">
           Volume: {Math.round(localSettings.volume * 100)}%
         </label>
         <input

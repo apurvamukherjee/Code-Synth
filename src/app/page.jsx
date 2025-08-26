@@ -69,7 +69,7 @@ for (let i = 0; i < 10; i++) {
 
   return (
     <div className="min-h-screen text-white">
-      <header className="border-b border-purple-500/20 bg-black/20 backdrop-blur-sm">
+      <header className="border-b border-red-500/20 bg-black/20 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -108,11 +108,11 @@ for (let i = 0; i < 10; i++) {
 
       <div className="container mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-120px)]">
-          <div className="lg:col-span-2 bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 overflow-hidden">
-            <div className="p-4 border-b border-purple-500/20 flex items-center space-x-4"> {/* Added flex container */}
+          <div className="lg:col-span-2 bg-black/40 backdrop-blur-sm rounded-xl border border-red-500/20 overflow-hidden">
+            <div className="p-4 border-b border-red-500/20 flex items-center space-x-4"> {/* Added flex container */}
               <MacHeader />
               <div>
-                <h2 className="text-lg font-semibold text-purple-300">Code Editor</h2>
+                <h2 className="text-lg font-semibold text-red-300">Code Editor</h2>
                 <p className="text-sm text-gray-400">by Apurva</p>
               </div>
             </div>
@@ -126,10 +126,10 @@ for (let i = 0; i < 10; i++) {
           {/* Right Panel */}
           <div className="lg:col-span-2 space-y-6">
             {/* Music Controls */}
-            <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6">
+            <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-red-500/20 p-6">
               <div className="flex items-center space-x-4"> {/* Added flex container */}
                 <MacHeader />
-                <h2 className="text-lg font-semibold text-purple-300">Music Controls</h2>
+                <h2 className="text-lg font-semibold text-red-300">Music Controls</h2>
               </div>
               <MusicControls
                 settings={musicSettings}
@@ -138,10 +138,10 @@ for (let i = 0; i < 10; i++) {
             </div>
 
             {/* Gemini AI Panel */}
-            <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/20 p-6 flex-1">
+            <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-red-500/20 p-6 flex-1">
               <div className="flex items-center space-x-4"> {/* Added flex container */}
                 <MacHeader />
-                <h2 className="text-lg font-semibold text-purple-300">AI Code Generator</h2>
+                <h2 className="text-lg font-semibold text-red-300">AI Code Generator</h2>
               </div>
               <GeminiPanel onCodeGenerated={setCode} />
             </div>
@@ -159,7 +159,7 @@ for (let i = 0; i < 10; i++) {
 
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-red-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
     </div>
